@@ -37,15 +37,11 @@ public class DiseaseSymptomController {
 
     @PostMapping("/disease")
     public List<Symptom> getAllDiseaseSymptomsByDisease(@RequestBody Disease disease) {
-        log.info("" + disease);
         return service.findSymptomsByDisease(disease);
     }
 
-
     @PostMapping("/symptoms")
     public List<Object[]> getAllDiseasesBySymptoms(@RequestBody List<Symptom> symptoms) {
-        log.info("" + symptoms);
-        log.info(String.valueOf(service.findDiseasesAndSymptomCountAndNamesBySymptoms(symptoms)));
         return service.findDiseasesAndSymptomCountAndNamesBySymptoms(symptoms);
     }
 
@@ -55,7 +51,9 @@ public class DiseaseSymptomController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DiseaseSymptom> updateDiseaseSymptom(@PathVariable Integer id, @RequestBody DiseaseSymptom updatedDiseaseSymptom) {
+    public ResponseEntity<DiseaseSymptom> updateDiseaseSymptom(
+            @PathVariable Integer id,
+            @RequestBody DiseaseSymptom updatedDiseaseSymptom) {
         return service.findById(id)
                 .map(diseaseSymptom -> {
                     updatedDiseaseSymptom.setDiseaseSymptomId(id);

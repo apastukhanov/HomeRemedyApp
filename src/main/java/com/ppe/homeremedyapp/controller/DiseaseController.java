@@ -32,20 +32,16 @@ public class DiseaseController {
     @Autowired
     private DiseaseMedicineRepository diseaseMedicineRepository;
 
-    // POST: Create a new disease
     @PostMapping
     public ResponseEntity<Disease> createDisease(@RequestBody Disease disease) {
         Disease savedDisease = diseaseRepository.save(disease);
         return new ResponseEntity<>(savedDisease, HttpStatus.CREATED);
     }
 
-
     @PostMapping("/extended")
     public ResponseEntity<Disease> createDiseaseExt(@RequestBody DiseaseExtended diseaseExt) {
-        log.info("diseaseExt is " + diseaseExt);
-
-        Optional<Disease> optionalDisease = diseaseRepository.findFirstByUmlsCode(diseaseExt.getUmlsCode());
-
+        Optional<Disease> optionalDisease = diseaseRepository.findFirstByUmlsCode(
+                                                                diseaseExt.getUmlsCode());
         Disease disease;
 
         if (!optionalDisease.isPresent()) {
@@ -70,13 +66,12 @@ public class DiseaseController {
                 diseaseSymptomRepository.save(ds);
             });
         }
-
         return new ResponseEntity<>(savedDisease, HttpStatus.CREATED);
     }
 
-
     @PutMapping("/{id}")
-    public ResponseEntity<Disease> updateDisease(@PathVariable Integer id, @RequestBody Disease diseaseDetails) {
+    public ResponseEntity<Disease> updateDisease(@PathVariable Integer id,
+                                                 @RequestBody Disease diseaseDetails) {
         Disease disease = diseaseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Disease not found with id " + id));
         disease.setName(diseaseDetails.getName());
@@ -85,7 +80,6 @@ public class DiseaseController {
         return ResponseEntity.ok(updatedDisease);
     }
 
-    // DELETE: Delete a disease
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteDisease(@PathVariable Integer id) {
         Disease disease = diseaseRepository.findById(id)
@@ -96,7 +90,6 @@ public class DiseaseController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // GET: Retrieve a disease based on its id
     @GetMapping("/{id}")
     public ResponseEntity<Disease> getDiseaseById(@PathVariable Integer id) {
         Disease disease = diseaseRepository.findById(id)
@@ -104,12 +97,11 @@ public class DiseaseController {
         return ResponseEntity.ok(disease);
     }
 
-
     @GetMapping
     public ResponseEntity<Page<Disease>> getAllDisease(Pageable pageable) {
-        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC,"diseaseId"));
+        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+                                        Sort.by(Sort.Direction.ASC,"diseaseId"));
         Page<Disease> sortedDiseases = diseaseRepository.findAll(pageable);
-        log.info("The first entry:" + sortedDiseases.stream().findFirst());
         return new ResponseEntity<>(sortedDiseases, HttpStatus.OK);
     }
 
@@ -117,8 +109,8 @@ public class DiseaseController {
     public ResponseEntity<Page<Disease>> getDiseasesByDescription(
             @RequestParam(value = "name") String name,
             Pageable pageable) {
-        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC,"diseaseId"));
-        log.info("Get mapping pageable:" + name);
+        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+                                    Sort.by(Sort.Direction.ASC,"diseaseId"));
         return ResponseEntity.ok(diseaseRepository.findByNameContaining(name, pageable));
     }
 }

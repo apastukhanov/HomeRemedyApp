@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface DiseaseRepository extends JpaRepository<Disease, Integer> {
-    // Additional query methods if needed
     Page<Disease> findByNameContaining(String name, Pageable pageable);
     Optional<Disease> findFirstByUmlsCode(String umlsCode);
 }

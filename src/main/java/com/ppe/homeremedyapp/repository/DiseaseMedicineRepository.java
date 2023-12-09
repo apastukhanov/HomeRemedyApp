@@ -15,8 +15,6 @@ import java.util.List;
 
 @Repository
 public interface DiseaseMedicineRepository extends JpaRepository<DiseaseMedicine, Integer> {
-    // Additional query methods if needed
-
 
     @Query("SELECT dm.medicine FROM DiseaseMedicine dm WHERE dm.disease = :disease")
     List<Medicine> findMedicinesByDisease(@Param("disease") Disease disease);
@@ -34,7 +32,8 @@ public interface DiseaseMedicineRepository extends JpaRepository<DiseaseMedicine
             "WHERE d IN :diseases " +
             "GROUP BY m " +
             "ORDER BY COUNT(d) DESC")
-    List<Object[]> findMedicinesAndDiseasesCountAndNamesByDiseases(@Param("diseases") List<Disease> diseases);
+    List<Object[]> findMedicinesAndDiseasesCountAndNamesByDiseases(
+            @Param("diseases") List<Disease> diseases);
 
 
     @Modifying

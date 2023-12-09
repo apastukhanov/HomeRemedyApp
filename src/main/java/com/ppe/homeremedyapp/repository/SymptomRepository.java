@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SymptomRepository extends JpaRepository<Symptom, Integer> {
-    // Additional query methods if needed
+
     Page<Symptom> findByDescriptionContaining(String description, Pageable pageable);
 }

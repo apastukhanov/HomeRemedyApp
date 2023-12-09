@@ -17,7 +17,6 @@ public class DiseaseMedicineController {
     @Autowired
     private DiseaseMedicineRepository service;
 
-
     @GetMapping
     public List<DiseaseMedicine> getAllDiseaseMedicines() {
         return service.findAll();
@@ -25,21 +24,16 @@ public class DiseaseMedicineController {
 
     @PostMapping("/disease")
     public List<Medicine> getAllMedicinesByDisease(@RequestBody Disease disease) {
-        log.info("" + disease);
         return service.findMedicinesByDisease(disease);
     }
 
     @PostMapping("/diseases")
     public List<Object[]> getAllMedicinesByDiseases(@RequestBody List<Disease> disease) {
-        log.info("" + disease);
-        log.info(String.valueOf(service.findMedicinesAndDiseasesCountAndNamesByDiseases(disease)));
         return service.findMedicinesAndDiseasesCountAndNamesByDiseases(disease);
     }
 
-
     @PostMapping("/medicine")
     public List<Disease> getAllDiseasesByMedicine(@RequestBody Medicine medicine) {
-        log.info("" + medicine);
         return service.findDiseasesByMedicine(medicine);
     }
 
@@ -56,7 +50,9 @@ public class DiseaseMedicineController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DiseaseMedicine> updateDiseaseMedicine(@PathVariable Integer id, @RequestBody DiseaseMedicine updatedDiseaseMedicine) {
+    public ResponseEntity<DiseaseMedicine> updateDiseaseMedicine(
+            @PathVariable Integer id,
+            @RequestBody DiseaseMedicine updatedDiseaseMedicine) {
         return service.findById(id)
                 .map(diseaseMedicine -> {
                     updatedDiseaseMedicine.setDiseaseMedicineId(id);

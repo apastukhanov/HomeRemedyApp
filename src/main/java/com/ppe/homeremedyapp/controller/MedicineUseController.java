@@ -45,7 +45,9 @@ public class MedicineUseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MedicineUse> updateMedicineUse(@PathVariable Integer id, @RequestBody MedicineUse updatedMedicineUse) {
+    public ResponseEntity<MedicineUse> updateMedicineUse(
+            @PathVariable Integer id,
+            @RequestBody MedicineUse updatedMedicineUse) {
         MedicineUse medicineUse = medicineUseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Medicine Use not found with id " + id));
 
@@ -65,10 +67,7 @@ public class MedicineUseController {
 
     @PostMapping("/medicine")
     public MedicineUse getAllDiseasesByMedicine(@RequestBody Medicine medicine) {
-        log.info("" + medicine);
-        log.info("" + new MedicineUse());
         return medicineUseRepository.findFirstByMedicine(medicine).orElse(new MedicineUse());
     }
-
 }
 

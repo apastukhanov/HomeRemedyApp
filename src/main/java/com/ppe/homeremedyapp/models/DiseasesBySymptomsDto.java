@@ -10,8 +10,7 @@ import java.util.*;
 public class DiseasesBySymptomsDto {
 
     private Disease diseases;
-
     private Integer countSymptoms;
-
     private String symptomsNames;
+
 }

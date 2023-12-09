@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface MedicineUseRepository extends JpaRepository<MedicineUse, Integer> {
-    // Additional query methods if needed
 
     @Modifying
     @Transactional
