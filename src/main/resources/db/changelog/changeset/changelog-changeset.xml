@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="01-Create-tables" author="PPE">
+        <sqlFile path="init/create-table-symptoms.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="init/create-table-diseases.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="init/create-table-medicines.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="init/create-table-disease_symptoms.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="init/create-table-disease_medicine.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="init/create-table-medicine_uses.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="02-Insert-tables" author="PPE">
+        <sqlFile path="insert/insert-table-diseases.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="insert/insert-table-symptoms.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="insert/insert-table-medicines.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="insert/insert-table-disease_medicine.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="insert/insert-table-disease_symptoms.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+</databaseChangeLog>
