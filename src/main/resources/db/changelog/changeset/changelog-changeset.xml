@@ -22,4 +22,13 @@
         <sqlFile path="insert/insert-table-disease_symptoms.sql" relativeToChangelogFile="true"/>
     </changeSet>
 
+    <changeSet id="03-Create-Seq" author="PPE">
+        <sqlFile path="init_seq/create-disease_medicine_seq.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="init_seq/create-disease_seq.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="init_seq/create-disease_symptom_seq.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="init_seq/create-medicine_seq.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="init_seq/create-symptom_seq.sql" relativeToChangelogFile="true"/>
+        <sqlFile path="init_seq/create-medicineuses_seq.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
 </databaseChangeLog>
