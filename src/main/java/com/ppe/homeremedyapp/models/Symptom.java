@@ -10,7 +10,8 @@ import lombok.Data;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Symptom {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "symptom_generator")
+    @SequenceGenerator(name = "symptom_generator", sequenceName = "symptoms_seq", allocationSize = 1)
     private Integer symptomId;
 
     @Column(nullable = false, unique = true)

@@ -40,8 +40,28 @@ public class DiseaseController {
 
     @PostMapping("/extended")
     public ResponseEntity<Disease> createDiseaseExt(@RequestBody DiseaseExtended diseaseExt) {
-        Optional<Disease> optionalDisease = diseaseRepository.findFirstByUmlsCode(
-                                                                diseaseExt.getUmlsCode());
+        log.info("" + diseaseExt);
+        Disease disease = getDiseaseByUmlsCode(diseaseExt.getUmlsCode());
+
+        disease.setUmlsCode(diseaseExt.getUmlsCode());
+        disease.setName(diseaseExt.getName());
+
+        Disease savedDisease = diseaseRepository.save(disease);
+
+        if (diseaseExt.getSymptoms() != null){
+            diseaseSymptomRepository.deleteAllByDisease(savedDisease);
+            diseaseExt.getSymptoms().forEach(symptom -> {
+                DiseaseSymptom ds =  new DiseaseSymptom();
+                ds.setDisease(savedDisease);
+                ds.setSymptom(symptom);
+                diseaseSymptomRepository.save(ds);
+            });
+        }
+        return new ResponseEntity<>(savedDisease, HttpStatus.CREATED);
+    }
+
+    private Disease getDiseaseByUmlsCode(String umlsCode) {
+        Optional<Disease> optionalDisease = diseaseRepository.findFirstByUmlsCode(umlsCode);
         Disease disease;
 
         if (!optionalDisease.isPresent()) {
@@ -51,22 +71,7 @@ public class DiseaseController {
         } else {
             disease = optionalDisease.get();
         }
-
-        disease.setUmlsCode(diseaseExt.getUmlsCode());
-        disease.setName(diseaseExt.getName());
-
-        Disease savedDisease = diseaseRepository.save(disease);
-
-        diseaseSymptomRepository.deleteAllByDisease(savedDisease);
-        if (diseaseExt.getSymptoms() != null){
-            diseaseExt.getSymptoms().forEach(symptom -> {
-                DiseaseSymptom ds =  new DiseaseSymptom();
-                ds.setDisease(savedDisease);
-                ds.setSymptom(symptom);
-                diseaseSymptomRepository.save(ds);
-            });
-        }
-        return new ResponseEntity<>(savedDisease, HttpStatus.CREATED);
+        return disease;
     }
 
     @PutMapping("/{id}")

@@ -8,7 +8,8 @@ import lombok.Data;
 @Table(name = "medicineuses")
 public class MedicineUse {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medicineuses_generator")
+    @SequenceGenerator(name = "medicineuses_generator", sequenceName = "medicineuses_seq", allocationSize = 1)
     private Integer useId;
 
     @ManyToOne(fetch = FetchType.EAGER)
